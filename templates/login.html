@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Login — ExamEdge{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <div class="auth-card card">
+    <div class="auth-logo">Exam<span>Edge</span></div>
+    <h2 class="auth-heading">Welcome Back</h2>
+    <p class="auth-sub">Log in to continue your preparation</p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for cat, msg in messages %}
+      <div class="flash flash-{{ cat }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+    <form method="POST" class="auth-form">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-control" type="email" name="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-control" type="password" name="password" placeholder="Your password" required>
+      </div>
+      <button class="btn btn-primary btn-full" type="submit">Log In →</button>
+    </form>
+    <div class="auth-footer">Don't have an account? <a href="{{ url_for('register') }}">Sign up free</a></div>
+  </div>
+</div>
+{% endblock %}

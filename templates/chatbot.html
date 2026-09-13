@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}AI Chatbot — ExamEdge{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+{% endblock %}
+{% block content %}
+<div class="chat-layout">
+
+  <!-- Sidebar -->
+  <aside class="chat-sidebar">
+    <div class="sb-section">
+      <div class="sb-label">Answer Format</div>
+      <button class="sb-btn" data-fmt="short" onclick="setFormat(this)">
+        📝 Short Answer
+        <small>2-4 sentences, exam-ready</small>
+      </button>
+      <button class="sb-btn active" data-fmt="detailed" onclick="setFormat(this)">
+        📖 Detailed
+        <small>Essay / long answer format</small>
+      </button>
+      <button class="sb-btn" data-fmt="bullet" onclick="setFormat(this)">
+        • Bullet Points
+        <small>Key facts listed clearly</small>
+      </button>
+      <button class="sb-btn" data-fmt="definition" onclick="setFormat(this)">
+        📚 Definition
+        <small>Term + example</small>
+      </button>
+    </div>
+
+    {% if has_doc %}
+    <div class="sb-divider"></div>
+    <div class="sb-section">
+      <div class="sb-label">Filter by Unit</div>
+      <select class="sb-select" id="unit-select">
+        <option value="">All Units</option>
+        {% for u in units %}
+        <option value="{{ loop.index0 }}">{{ u.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="sb-divider"></div>
+    <div class="sb-section">
+      <div class="sb-label">Document Actions</div>
+      <button class="sb-btn" onclick="docAction('overview')">🗒 Overview Summary</button>
+      <button class="sb-btn" onclick="docAction('key_points')">🎯 Key Points</button>
+      <button class="sb-btn" onclick="docAction('exam_focus')">🔥 Exam Focus</button>
+    </div>
+    {% endif %}
+
+    <div class="sb-divider"></div>
+    <div class="sb-section">
+      <button class="sb-btn sb-danger" onclick="clearHistory()">🗑 Clear Chat History</button>
+    </div>
+  </aside>
+
+  <!-- Chat Main -->
+  <div class="chat-main">
+    <div class="messages" id="messages">
+      {% if history %}
+        {% for msg in history %}
+        <div class="msg {{ msg['role'] }} fade-in">
+          <div class="msg-bubble">{{ msg['message'] }}</div>
+        </div>
+        {% endfor %}
+      {% else %}
+      <div class="chat-empty" id="empty-state">
+        <div class="chat-empty-icon">🤖</div>
+        <h3>AI Exam Tutor</h3>
+        <p>
+          {% if has_doc %}
+            Ask anything about your uploaded units. Select a unit filter for more focused answers.
+          {% else %}
+            No documents uploaded — I'll answer from general knowledge. Upload PDFs for grounded answers.
+          {% endif %}
+        </p>
+        <div class="suggestion-chips">
+          <button class="chip" onclick="useChip(this)">Explain the main concept</button>
+          <button class="chip" onclick="useChip(this)">What are the key formulas?</button>
+          <button class="chip" onclick="useChip(this)">What are the important topics?</button>
+          <button class="chip" onclick="useChip(this)">Summarize this unit</button>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input-area">
+      <textarea
+        id="qInput"
+        rows="1"
+        placeholder="Ask a question... (Enter to send, Shift+Enter for new line)"
+        onkeydown="handleKey(event)"
+        oninput="autoResize(this)">
+      </textarea>
+      <button class="btn btn-primary" id="sendBtn" onclick="sendMessage()">Send →</button>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+{% endblock %}

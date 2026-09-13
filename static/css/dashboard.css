@@ -1,0 +1,82 @@
+/* ═══════════════════════════════════════════════════════
+   DASHBOARD.CSS — Dashboard page styles
+═══════════════════════════════════════════════════════ */
+
+.dash-header { margin-bottom: 2rem; padding-top: 0.5rem; }
+.dash-title { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; margin-bottom: 0.3rem; }
+.dash-sub { color: var(--muted); font-size: 0.9rem; }
+
+/* ── Document Strip ─────────────────────────────────── */
+.doc-strip {
+  background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(108,99,255,0.04));
+  border: 1px solid rgba(108,99,255,0.2);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.doc-strip-icon { font-size: 2.2rem; flex-shrink: 0; }
+.doc-strip-info { flex: 1; min-width: 200px; }
+.doc-strip-info strong { font-size: 0.95rem; font-weight: 700; }
+.doc-strip-info p { font-size: 0.82rem; color: var(--muted); margin-top: 0.3rem; }
+.doc-strip-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+/* ── Unit Chips ─────────────────────────────────────── */
+.unit-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.unit-chip {
+  background: rgba(108,99,255,0.1);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.2rem 0.7rem;
+  border-radius: 100px;
+  border: 1px solid rgba(108,99,255,0.2);
+}
+
+/* ── Tools Grid ─────────────────────────────────────── */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+@media (max-width: 768px) { .tools-grid { grid-template-columns: 1fr; } }
+@media (max-width: 1000px) and (min-width: 768px) { .tools-grid { grid-template-columns: 1fr 1fr; } }
+
+.tool-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.8rem 1.5rem;
+  text-decoration: none;
+  display: block;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.tool-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transform: scaleX(0);
+  transition: transform 0.25s;
+}
+.tool-card:hover { border-color: rgba(108,99,255,0.3); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+.tool-card:hover::after { transform: scaleX(1); }
+.tool-icon { font-size: 2rem; display: block; margin-bottom: 1rem; }
+.tool-card h3 { font-family: var(--font-head); font-size: 1rem; color: var(--text); margin-bottom: 0.4rem; }
+.tool-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+.tool-tag {
+  display: inline-block;
+  font-size: 0.68rem; font-weight: 700;
+  padding: 0.2rem 0.7rem; border-radius: 100px;
+  background: rgba(108,99,255,0.1); color: var(--accent);
+  border: 1px solid rgba(108,99,255,0.2);
+}
+.tool-tag.rag { background: rgba(255,101,132,0.1); color: var(--accent2); border-color: rgba(255,101,132,0.2); }
+.tool-tag.quiz { background: rgba(6,214,160,0.1); color: var(--green); border-color: rgba(6,214,160,0.2); }

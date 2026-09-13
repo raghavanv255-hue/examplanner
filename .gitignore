@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+.env
+examedge.db
+uploads/
+*.zip
+*.sqlite
+*.db

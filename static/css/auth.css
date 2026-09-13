@@ -1,0 +1,83 @@
+/* ═══════════════════════════════════════════════════════
+   AUTH.CSS — Login & Register pages
+═══════════════════════════════════════════════════════ */
+
+.auth-wrap {
+  min-height: calc(100vh - 65px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: radial-gradient(ellipse at 30% 50%, rgba(108,99,255,0.08) 0%, transparent 60%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 2.5rem;
+  animation: authFadeIn 0.4s ease;
+}
+
+@keyframes authFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.auth-logo {
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 1.8rem;
+  display: inline-block;
+}
+.auth-logo span { color: var(--accent); }
+
+.auth-heading {
+  font-family: var(--font-head);
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.3rem;
+}
+
+.auth-sub {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-bottom: 2rem;
+}
+
+.auth-form { display: flex; flex-direction: column; gap: 0; }
+
+.auth-form .form-control { background: rgba(255,255,255,0.04); }
+.auth-form .form-control:focus { border-color: var(--accent); background: rgba(108,99,255,0.05); }
+
+.auth-form .btn-primary {
+  margin-top: 0.5rem;
+  padding: 0.85rem;
+  font-size: 0.92rem;
+  background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+  box-shadow: 0 4px 20px rgba(108,99,255,0.35);
+}
+.auth-form .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(108,99,255,0.45);
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.auth-footer a { color: var(--accent); font-weight: 600; }
+.auth-footer a:hover { text-decoration: underline; }
+
+/* Divider */
+.auth-divider {
+  display: flex; align-items: center; gap: 1rem;
+  margin: 1.2rem 0; color: var(--muted); font-size: 0.78rem;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}

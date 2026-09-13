@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — ExamEdge{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+
+  <!-- Page Header -->
+  <div class="dash-header">
+    <div>
+      <h1 class="dash-title">👋 Welcome back, {{ user }}</h1>
+      <p class="dash-sub">Your study hub — everything you need in one place</p>
+    </div>
+  </div>
+
+  <!-- Document Strip -->
+  <div class="doc-strip">
+    <div class="doc-strip-icon">📚</div>
+    <div class="doc-strip-info">
+      {% if has_doc %}
+        <strong>{{ units|length }} Unit{{ 's' if units|length > 1 else '' }} Loaded</strong>
+        <span class="badge badge-purple" style="margin-left:0.5rem;">✓ RAG ACTIVE</span>
+        <div class="unit-chips">
+          {% for u in units %}
+          <span class="unit-chip">{{ u.name }}</span>
+          {% endfor %}
+        </div>
+        <p>All tools are powered by your uploaded documents.</p>
+      {% else %}
+        <strong>No Study Material Uploaded</strong>
+        <p>Upload your PDF notes to unlock AI-powered Study Planner, Chatbot and Quiz.</p>
+      {% endif %}
+    </div>
+    <div class="doc-strip-actions">
+      <button class="btn btn-primary btn-sm" onclick="openModal()">
+        {{ '↑ Add More PDFs' if has_doc else '↑ Upload PDFs' }}
+      </button>
+      {% if has_doc %}
+      <button class="btn btn-danger btn-sm" onclick="clearDocs()">✕ Clear All</button>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Tools Grid -->
+  <div class="tools-grid">
+    <a class="tool-card" href="{{ url_for('planner') }}">
+      <span class="tool-icon">⏱️</span>
+      <h3>Study Planner</h3>
+      <p>Enter days & hours remaining. Get a structured, prioritized schedule.</p>
+      <span class="tool-tag">Time-Sensitive</span>
+    </a>
+    <a class="tool-card" href="{{ url_for('chatbot') }}">
+      <span class="tool-icon">🤖</span>
+      <h3>AI Chatbot</h3>
+      <p>Ask questions and get answers grounded in your uploaded material.</p>
+      <span class="tool-tag rag">RAG-Powered</span>
+    </a>
+    <a class="tool-card" href="{{ url_for('quiz') }}">
+      <span class="tool-icon">📝</span>
+      <h3>Quiz & Revision</h3>
+      <p>MCQ quizzes generated from your study material. Track your scores.</p>
+      <span class="tool-tag quiz">Per Unit</span>
+    </a>
+  </div>
+
+  <!-- Quiz Results -->
+  {% if results %}
+  <div class="section-title">Recent Quiz Results</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Unit</th><th>Score</th><th>Result</th><th>Date</th></tr></thead>
+      <tbody>
+        {% for r in results %}
+        {% set pct = (r.score / r.total * 100)|int if r.total > 0 else 0 %}
+        <tr>
+          <td><strong>{{ r.unit_name }}</strong></td>
+          <td>{{ r.score }} / {{ r.total }}</td>
+          <td>
+            <span class="badge {% if pct >= 75 %}badge-green{% elif pct >= 50 %}badge-gold{% else %}badge-red{% endif %}">{{ pct }}%</span>
+            <span class="pct-bar">
+              <span class="pct-fill" style="width:{{ pct }}%;background:{% if pct >= 75 %}var(--green){% elif pct >= 50 %}var(--gold){% else %}var(--red){% endif %}"></span>
+            </span>
+          </td>
+          <td style="color:var(--muted);font-size:0.78rem;">{{ r.created_at[:16] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  <!-- Study Sessions -->
+  {% if sessions %}
+  <div class="section-title">Recent Study Sessions</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Subject</th><th>Hours Planned</th><th>Date</th></tr></thead>
+      <tbody>
+        {% for s in sessions %}
+        <tr>
+          <td><strong>{{ s.subject }}</strong></td>
+          <td>{{ s.hours_left }}h</td>
+          <td style="color:var(--muted);font-size:0.78rem;">{{ s.created_at[:16] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="ei">📅</div>
+    <h4>No study sessions yet</h4>
+    <p>Use the Study Planner to generate your first personalized schedule.</p>
+  </div>
+  {% endif %}
+
+</div>
+
+<!-- Upload Modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3>Upload Study Materials</h3>
+    <p>Upload one PDF per unit. Each file becomes a separate searchable unit for targeted quizzes and answers.</p>
+    <div class="drop-zone" id="dropzone"
+         onclick="document.getElementById('pdfInput').click()"
+         ondragover="event.preventDefault(); this.classList.add('drag')"
+         ondragleave="this.classList.remove('drag')"
+         ondrop="handleDrop(event)">
+      <div class="dz-icon">📄</div>
+      <p id="dz-text">Click or drag & drop your PDFs here</p>
+      <small>Multiple files supported — one per unit recommended</small>
+      <input type="file" id="pdfInput" accept=".pdf" multiple onchange="handleFileSelect(this)">
+    </div>
+    <ul class="file-list" id="file-names"></ul>
+    <div class="progress-bar" id="pbar"><div class="progress-fill" id="pfill"></div></div>
+    <div id="upload-status" class="upload-status">Uploading and indexing your files...</div>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="uploadBtn" onclick="doUpload()" disabled>Upload & Index</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

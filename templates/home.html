@@ -1,0 +1,384 @@
+{% extends "base.html" %}
+{% block title %}ExamPlanner — AI-Powered Exam Preparation{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+{% block content %}
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-blob blob-1"></div>
+    <div class="hero-blob blob-2"></div>
+    <div class="hero-blob blob-3"></div>
+    <div class="hero-dots"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-pill">
+        <span class="pill-dot"></span>
+        AI-Powered &nbsp;·&nbsp; RAG Technology &nbsp;·&nbsp; Free to Use
+      </div>
+
+      <h1>
+        The Smartest Way<br>
+        to Prepare for<br>
+        <span class="hero-highlight">Your Exam</span>
+      </h1>
+
+      <p class="hero-desc">
+        Upload your notes, set your exam countdown, and let AI do the heavy lifting.
+        Get a personalized study plan, instant answers from your documents,
+        and unit-wise MCQ quizzes — all in one place.
+      </p>
+
+      <div class="hero-actions">
+        <a href="{{ url_for('register') }}" class="btn-glow">
+          Start Preparing Free
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#features" class="btn-outline-hero">See How It Works</a>
+      </div>
+
+      <div class="hero-trust">
+        <div class="trust-avatars">
+          <div class="avatar av1">S</div>
+          <div class="avatar av2">R</div>
+          <div class="avatar av3">A</div>
+          <div class="avatar av4">M</div>
+        </div>
+        <p>Join students already using ExamPlanner</p>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-mockup">
+        <!-- Floating card 1: Upload -->
+        <div class="float-card fc-upload">
+          <div class="fc-icon">📄</div>
+          <div class="fc-text">
+            <strong>Unit 3 Uploaded</strong>
+            <span>Data Structures.pdf · Indexed ✓</span>
+          </div>
+          <div class="fc-check">✓</div>
+        </div>
+
+        <!-- Main App Card -->
+        <div class="app-card">
+          <div class="app-card-header">
+            <div class="app-card-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <span class="app-card-title">ExamPlanner AI</span>
+            <div class="app-card-badge">LIVE</div>
+          </div>
+
+          <div class="app-card-body">
+            <div class="app-countdown">
+              <div class="countdown-label">Exam In</div>
+              <div class="countdown-timer">
+                <div class="ct-block"><span class="ct-num">02</span><span class="ct-lbl">Days</span></div>
+                <span class="ct-sep">:</span>
+                <div class="ct-block"><span class="ct-num">14</span><span class="ct-lbl">Hours</span></div>
+                <span class="ct-sep">:</span>
+                <div class="ct-block"><span class="ct-num">32</span><span class="ct-lbl">Mins</span></div>
+              </div>
+            </div>
+
+            <div class="app-chat">
+              <div class="chat-bubble user-bubble">What is quicksort's time complexity?</div>
+              <div class="chat-bubble ai-bubble">
+                <strong>O(n log n)</strong> average case.<br>
+                <span style="opacity:0.7;font-size:0.78rem;">From your Unit 3 notes 📄</span>
+              </div>
+            </div>
+
+            <div class="app-progress-section">
+              <div class="prog-label">Today's Progress</div>
+              <div class="prog-bars">
+                <div class="prog-item">
+                  <span>Unit 1</span>
+                  <div class="prog-track"><div class="prog-fill" style="width:85%"></div></div>
+                  <span>85%</span>
+                </div>
+                <div class="prog-item">
+                  <span>Unit 2</span>
+                  <div class="prog-track"><div class="prog-fill" style="width:60%"></div></div>
+                  <span>60%</span>
+                </div>
+                <div class="prog-item">
+                  <span>Unit 3</span>
+                  <div class="prog-track"><div class="prog-fill pf-yellow" style="width:30%"></div></div>
+                  <span>30%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating card 2: Score -->
+        <div class="float-card fc-score">
+          <div class="fc-score-ring">
+            <span>8/10</span>
+          </div>
+          <div class="fc-text">
+            <strong>Unit 2 Quiz</strong>
+            <span>Great job! 🎉</span>
+          </div>
+        </div>
+
+        <!-- Floating card 3: Schedule -->
+        <div class="float-card fc-plan">
+          <div class="fc-icon">⏱️</div>
+          <div class="fc-text">
+            <strong>Study plan ready</strong>
+            <span>6 sessions · 2 days</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BAR ══════════════════════════════════════════════════════════ -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-box">
+      <div class="stat-n">3</div>
+      <div class="stat-l">AI Tools</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-box">
+      <div class="stat-n">RAG</div>
+      <div class="stat-l">Technology</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-box">
+      <div class="stat-n">100%</div>
+      <div class="stat-l">From Your Docs</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-box">
+      <div class="stat-n">Free</div>
+      <div class="stat-l">To Get Started</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FEATURES ══════════════════════════════════════════════════════════ -->
+<section class="features-section" id="features">
+  <div class="section-wrap">
+    <div class="section-top">
+      <div class="section-pill">What's Inside</div>
+      <h2>Three Powerful Tools<br>Built for Exam Success</h2>
+      <p>Every tool runs on your uploaded PDFs — not generic internet answers. Upload your notes once and all three tools instantly become powered by your actual study material.</p>
+    </div>
+
+    <div class="features-layout">
+
+      <!-- Feature 1 -->
+      <div class="feat-item reveal">
+        <div class="feat-num">01</div>
+        <div class="feat-content">
+          <div class="feat-icon-box" style="--icon-color: #6c63ff;">⏱️</div>
+          <h3>Smart Study Planner</h3>
+          <p>Enter how many days and hours you have left before your exam. ExamPlanner generates a complete study schedule — broken down hour by hour, topic by topic — so you never waste a minute.</p>
+          <ul class="feat-list">
+            <li>📅 Day-by-day time blocks with exact timings</li>
+            <li>🎯 Topics prioritized by exam weightage</li>
+            <li>☕ Auto break scheduling every 50 minutes</li>
+            <li>✅ Quick revision checklist for last-minute review</li>
+            <li>💡 Exam-day tips and motivation</li>
+          </ul>
+          <a href="{{ url_for('register') }}" class="feat-link">Get My Study Plan →</a>
+        </div>
+        <div class="feat-visual">
+          <div class="fv-card">
+            <div class="fv-header">
+              <span class="fv-dot"></span>
+              Study Schedule — Physics
+            </div>
+            <div class="fv-slot">
+              <div class="fv-time">9:00 – 10:00</div>
+              <div class="fv-detail">
+                <strong>Chapter 3: Thermodynamics</strong>
+                <span>Read notes, solve 5 MCQs</span>
+              </div>
+            </div>
+            <div class="fv-slot">
+              <div class="fv-time">10:10 – 11:10</div>
+              <div class="fv-detail">
+                <strong>Chapter 5: Optics</strong>
+                <span>Formulas + derivations</span>
+              </div>
+            </div>
+            <div class="fv-slot highlight">
+              <div class="fv-time">11:20 – 12:00</div>
+              <div class="fv-detail">
+                <strong>☕ Break + Quick Revision</strong>
+                <span>Review flashcards</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="feat-item feat-reverse reveal">
+        <div class="feat-num">02</div>
+        <div class="feat-content">
+          <div class="feat-icon-box" style="--icon-color: #ff6584;">🤖</div>
+          <h3>AI Chatbot — From Your Notes</h3>
+          <p>Ask anything and get answers directly from your uploaded PDF notes — not Google, not Wikipedia. The AI reads your documents using RAG technology and gives precise, grounded answers.</p>
+          <ul class="feat-list">
+            <li>📄 Answers strictly from your uploaded PDFs</li>
+            <li>🎯 Filter by specific unit for focused answers</li>
+            <li>📝 4 answer formats — Short, Detailed, Bullets, Definition</li>
+            <li>📊 Document overview & exam-focus analysis</li>
+            <li>💬 Full conversation history saved</li>
+          </ul>
+          <a href="{{ url_for('register') }}" class="feat-link">Ask From My Notes →</a>
+        </div>
+        <div class="feat-visual">
+          <div class="fv-card fv-chat">
+            <div class="fv-header"><span class="fv-dot fv-dot-pink"></span>AI Chatbot</div>
+            <div class="chat-msg user-msg-fv">Define binary search tree?</div>
+            <div class="chat-msg ai-msg-fv">
+              A <strong>Binary Search Tree (BST)</strong> is a node-based binary tree where each node's left subtree contains only nodes with keys less than the node's key...
+              <div class="chat-src">📄 Unit 2 — Trees.pdf</div>
+            </div>
+            <div class="chat-msg user-msg-fv">What is its time complexity?</div>
+            <div class="chat-msg ai-msg-fv">
+              Search, Insert, Delete: <strong>O(log n)</strong> average, <strong>O(n)</strong> worst case...
+              <div class="chat-src">📄 Unit 2 — Trees.pdf</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="feat-item reveal">
+        <div class="feat-num">03</div>
+        <div class="feat-content">
+          <div class="feat-icon-box" style="--icon-color: #06d6a0;">📝</div>
+          <h3>Quiz & Revision Per Unit</h3>
+          <p>After studying a unit, test your understanding with MCQ quizzes generated directly from that unit's content. Get instant explanations, track your scores, and identify which units need more attention.</p>
+          <ul class="feat-list">
+            <li>🎯 MCQs from your actual uploaded material</li>
+            <li>📚 Quiz per unit or across all units</li>
+            <li>🔥 Easy, Medium, Hard difficulty levels</li>
+            <li>✅ Instant answer explanation after each question</li>
+            <li>📊 Score history and progress tracking</li>
+          </ul>
+          <a href="{{ url_for('register') }}" class="feat-link">Take a Quiz →</a>
+        </div>
+        <div class="feat-visual">
+          <div class="fv-card fv-quiz">
+            <div class="fv-header"><span class="fv-dot fv-dot-green"></span>Unit 3 Quiz · Medium</div>
+            <div class="quiz-q">Q2: What is the space complexity of merge sort?</div>
+            <div class="quiz-opts">
+              <div class="quiz-opt wrong">A) O(1)</div>
+              <div class="quiz-opt correct">B) O(n) ✓</div>
+              <div class="quiz-opt">C) O(log n)</div>
+              <div class="quiz-opt">D) O(n²)</div>
+            </div>
+            <div class="quiz-exp">💡 Merge sort requires O(n) auxiliary space for the temporary arrays during merge.</div>
+            <div class="quiz-score">Score: <strong>7 / 10</strong> &nbsp; 70%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ══════════════════════════════════════════════════════ -->
+<section class="how-section">
+  <div class="section-wrap">
+    <div class="section-top">
+      <div class="section-pill">Simple Process</div>
+      <h2>Up and Running in Under 2 Minutes</h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step reveal">
+        <div class="how-step-icon">📂</div>
+        <div class="how-step-num">Step 1</div>
+        <h4>Create Account</h4>
+        <p>Sign up free in 30 seconds. No credit card, no subscription required.</p>
+      </div>
+      <div class="how-arrow">→</div>
+      <div class="how-step reveal">
+        <div class="how-step-icon">📄</div>
+        <div class="how-step-num">Step 2</div>
+        <h4>Upload Your PDFs</h4>
+        <p>Drop in your lecture notes, textbooks, or any study material. One per unit works best.</p>
+      </div>
+      <div class="how-arrow">→</div>
+      <div class="how-step reveal">
+        <div class="how-step-icon">⏱️</div>
+        <div class="how-step-num">Step 3</div>
+        <h4>Set Your Countdown</h4>
+        <p>Tell us how many days and hours until your exam. Get an instant study plan.</p>
+      </div>
+      <div class="how-arrow">→</div>
+      <div class="how-step reveal">
+        <div class="how-step-icon">🎯</div>
+        <div class="how-step-num">Step 4</div>
+        <h4>Study, Ask & Quiz</h4>
+        <p>Follow your plan, ask the AI, and test yourself per unit. Repeat until exam-ready.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ════════════════════════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="cta-bg-glow"></div>
+  <div class="cta-inner">
+    <div class="cta-emoji">🎓</div>
+    <h2>Your Exam is Coming.<br>Start Preparing <span class="cta-highlight">Right Now.</span></h2>
+    <p>ExamPlanner gives you everything you need to walk into your exam with confidence — even if it's tomorrow.</p>
+    <div class="cta-btns">
+      <a href="{{ url_for('register') }}" class="btn-glow btn-glow-lg">
+        Create Free Account →
+      </a>
+      <a href="{{ url_for('login') }}" class="btn-outline-cta">Already have an account? Log In</a>
+    </div>
+    <div class="cta-features">
+      <span>✓ Free forever</span>
+      <span>✓ No credit card</span>
+      <span>✓ Start in 30 seconds</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Exam<span>Planner</span></div>
+      <p>AI-powered last-minute exam preparation.<br>Powered by Google Gemini + RAG Technology.</p>
+    </div>
+    <div class="footer-right">
+      <div class="footer-col">
+        <strong>Tools</strong>
+        <a href="{{ url_for('planner') }}">Study Planner</a>
+        <a href="{{ url_for('chatbot') }}">AI Chatbot</a>
+        <a href="{{ url_for('quiz') }}">Quiz & Revision</a>
+      </div>
+      <div class="footer-col">
+        <strong>Account</strong>
+        <a href="{{ url_for('register') }}">Sign Up Free</a>
+        <a href="{{ url_for('login') }}">Log In</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2024 ExamPlanner · Built for Students</div>
+</footer>
+
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}

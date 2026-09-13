@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Quiz & Revision — ExamEdge{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>📝 Quiz & Revision</h1>
+    <p>Test yourself with AI-generated MCQs pulled directly from your study material</p>
+  </div>
+
+  <!-- Config Card -->
+  <div class="card quiz-config-card">
+    {% if has_doc %}
+    <div class="form-group">
+      <label class="form-label">Select Unit to Quiz</label>
+      <div class="unit-tabs" id="unit-tabs">
+        <button class="unit-tab active" data-idx="" onclick="selectUnit(this)">All Units</button>
+        {% for u in units %}
+        <button class="unit-tab" data-idx="{{ loop.index0 }}" onclick="selectUnit(this)">{{ u.name }}</button>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="quiz-config-row">
+      <div class="form-group">
+        <label class="form-label">Topic / Focus Area</label>
+        <input class="form-control" type="text" id="topic" placeholder="e.g. Sorting Algorithms, Thermodynamics">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Difficulty</label>
+        <select class="form-control" id="difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Questions</label>
+        <select class="form-control" id="num_q">
+          <option value="5">5 Questions</option>
+          <option value="10" selected>10 Questions</option>
+          <option value="15">15 Questions</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-full quiz-start-btn" id="startBtn" onclick="startQuiz()">
+      Generate Quiz →
+    </button>
+  </div>
+
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="spinner"></div>
+    <p>Generating questions from your material...</p>
+  </div>
+
+  <!-- Quiz Area -->
+  <div id="quiz-area" style="display:none;">
+    <div class="quiz-meta">
+      <div class="quiz-meta-title" id="quiz-title"></div>
+      <div class="badge badge-gold" id="score-badge">0 / 0</div>
+    </div>
+    <div id="questions-wrap"></div>
+    <div id="result-section" style="display:none;"></div>
+  </div>
+
+  <!-- Past Results -->
+  {% if results %}
+  <div class="section-title" style="margin-top:2.5rem;">Past Quiz Results</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Unit / Topic</th><th>Score</th><th>Result</th><th>Date</th></tr>
+      </thead>
+      <tbody>
+        {% for r in results %}
+        {% set pct = (r.score / r.total * 100)|int if r.total > 0 else 0 %}
+        <tr>
+          <td><strong>{{ r.unit_name }}</strong></td>
+          <td>{{ r.score }} / {{ r.total }}</td>
+          <td>
+            <span class="badge {% if pct >= 75 %}badge-green{% elif pct >= 50 %}badge-gold{% else %}badge-red{% endif %}">
+              {{ pct }}%
+            </span>
+            <span class="pct-bar">
+              <span class="pct-fill" style="width:{{ pct }}%;background:{% if pct >= 75 %}var(--green){% elif pct >= 50 %}var(--gold){% else %}var(--red){% endif %}"></span>
+            </span>
+          </td>
+          <td style="color:var(--muted);font-size:0.78rem;">{{ r.created_at[:16] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+{% endblock %}

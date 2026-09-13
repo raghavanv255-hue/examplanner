@@ -1,0 +1,147 @@
+/* ═══════════════════════════════════════════════════════
+   QUIZ.CSS — Quiz & Revision page styles
+═══════════════════════════════════════════════════════ */
+
+/* ── Config Card ────────────────────────────────────── */
+.quiz-config-card { margin-bottom: 1.5rem; }
+
+.quiz-config-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) { .quiz-config-row { grid-template-columns: 1fr; } }
+
+.quiz-start-btn { padding: 0.9rem; font-size: 0.92rem; }
+
+/* ── Quiz Meta Header ───────────────────────────────── */
+.quiz-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.quiz-meta-title {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+/* ── Question Cards ─────────────────────────────────── */
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.q-card.answered { border-color: rgba(255,255,255,0.12); }
+
+.q-number {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.q-text {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 1.2rem;
+}
+
+/* ── Option Buttons ─────────────────────────────────── */
+.option-btn {
+  width: 100%;
+  padding: 0.85rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.88rem;
+  background: var(--surface2);
+  text-align: left;
+  transition: all 0.15s;
+  font-family: var(--font);
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.option-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: rgba(108,99,255,0.08);
+}
+.option-btn.correct {
+  background: rgba(6,214,160,0.1);
+  border-color: var(--green);
+  color: var(--green);
+}
+.option-btn.wrong {
+  background: rgba(239,71,111,0.1);
+  border-color: var(--red);
+  color: var(--red);
+}
+.option-btn:disabled { cursor: default; }
+.option-key {
+  font-weight: 800;
+  color: var(--accent);
+  font-size: 0.82rem;
+  min-width: 20px;
+}
+.option-btn.correct .option-key { color: var(--green); }
+.option-btn.wrong .option-key   { color: var(--red); }
+
+/* ── Explanation Box ────────────────────────────────── */
+.explanation-box {
+  display: none;
+  background: rgba(255,209,102,0.07);
+  border-left: 3px solid var(--gold);
+  padding: 0.85rem 1rem;
+  font-size: 0.83rem;
+  margin-top: 0.6rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  line-height: 1.65;
+  color: var(--text);
+}
+.explanation-box.show { display: block; }
+
+/* ── Result Card ────────────────────────────────────── */
+.result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3rem 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.4s ease;
+}
+.result-card h3 {
+  font-family: var(--font-head);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.6rem;
+}
+.result-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6; }
+.result-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ── Score Ring ─────────────────────────────────────── */
+.score-ring {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  border: 6px solid var(--gold);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+.score-ring .snum { font-family: var(--font-head); font-size: 2rem; font-weight: 800; line-height: 1; }
+.score-ring .slbl { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; }

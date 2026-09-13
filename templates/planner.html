@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Study Planner — ExamEdge{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/planner.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>⏱️ Study Planner</h1>
+    <p>Enter your exam details and get a personalized, time-optimized study schedule</p>
+  </div>
+
+  <!-- Config Card -->
+  <div class="card planner-card">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Subject / Course</label>
+        <input class="form-control" type="text" id="subject" placeholder="e.g. Data Structures, Physics, Chemistry">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Exam Type</label>
+        <select class="form-control" id="exam_type">
+          <option>University Exam</option>
+          <option>Semester Exam</option>
+          <option>Competitive Exam</option>
+          <option>Board Exam</option>
+          <option>Viva / Oral Exam</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Time Remaining Until Exam</label>
+      <div class="time-inputs">
+        <div class="time-box">
+          <label class="time-box-label">Days</label>
+          <input class="form-control time-input" type="number" id="days" min="0" max="30" value="0" oninput="updateTimeDisplay()">
+        </div>
+        <div class="time-separator">:</div>
+        <div class="time-box">
+          <label class="time-box-label">Hours</label>
+          <input class="form-control time-input" type="number" id="hours" min="0" max="23" value="5" oninput="updateTimeDisplay()">
+        </div>
+      </div>
+      <div class="time-display" id="time-display">5h total study time</div>
+    </div>
+
+    {% if units %}
+    <div class="form-group">
+      <label class="form-label">Focus Unit (optional)</label>
+      <select class="form-control" id="unit_focus">
+        <option value="">All Uploaded Units</option>
+        {% for u in units %}
+        <option value="{{ loop.index0 }}">{{ u.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+      <label class="form-label">Topics / Chapters (optional)</label>
+      <textarea class="form-control" id="topics" placeholder="e.g. Arrays, Linked Lists, Sorting Algorithms, Trees..."></textarea>
+    </div>
+
+    <button class="btn btn-primary btn-full planner-btn" id="genBtn" onclick="generatePlan()">
+      Generate My Study Plan →
+    </button>
+  </div>
+
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="spinner"></div>
+    <p>AI is crafting your personalized schedule...</p>
+  </div>
+
+  <!-- Output -->
+  <div id="output" style="display:none;">
+    <div class="strategy-box" id="strategy-box"></div>
+
+    <div class="output-section-title">📅 Your Study Schedule</div>
+    <div id="schedule-slots"></div>
+
+    <div class="output-section-title" style="margin-top:2rem;">✅ Quick Revision Checklist</div>
+    <div id="checklist" style="margin-bottom:2rem;"></div>
+
+    <div class="output-section-title">📋 Exam Day Tips</div>
+    <div id="exam-tips" class="tips-row"></div>
+
+    <div id="stress-note" class="stress-note"></div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/planner.js') }}"></script>
+{% endblock %}
